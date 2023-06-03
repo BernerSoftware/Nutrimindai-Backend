@@ -4,7 +4,7 @@ const UserNutritionList = require("./../models/userNutritionListModel");
 const { currentUserByRequest } = require("./../utils/currentUser");
 const { Configuration, OpenAIApi } = require("openai");
 const config = new Configuration({
-  apiKey: "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",
+  apiKey: process.env.OPEN_AI_SECRET_KEY,
 });
 const openai = new OpenAIApi(config);
 

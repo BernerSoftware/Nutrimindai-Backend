@@ -4,7 +4,7 @@ const { Configuration, OpenAIApi } = require("openai");
 const flatted = require("flatted");
 
 const config = new Configuration({
-  apiKey: "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",
+  apiKey: process.env.OPEN_AI_SECRET_KEY,
 });
 const openai = new OpenAIApi(config);
 
@@ -35,7 +35,7 @@ exports.openai = catchAsync(async (req, res, next) => {
         ],
     }
 
-Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 4 tane max obje olsun.`;
+Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 4 tane max obje daha az da olabilir.`;
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
