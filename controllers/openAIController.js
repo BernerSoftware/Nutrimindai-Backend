@@ -11,7 +11,7 @@ const openai = new OpenAIApi(config);
 exports.openai = catchAsync(async (req, res, next) => {
   const { age, gender, height, weight, targetWeight, allergies } = req.body;
   const prompt = `${age} yaşında ${gender}, ${height} boyunda, ${weight}  kilosunda, ${targetWeight} kilo olmak isteyen, Türkiyede yaşayan, Gluten intoleransı hastalığı olan bir birey için örnek bir diyet listesi hazırlamanı istiyorum. Diyet listesinin yapısı aynen şu şekilde olmalı: 
-İstediğin kadar öğün olabilir. Alerjiler ise şöyledir = ${allergies}. Sadece Sabah,Öğle ve Akşam yemeği olsun.
+İstediğin kadar öğün olabilir. Alerjiler ise şöyledir = ${allergies}. Sadece Sabah,Öğle ve Akşam yemeği olsun 3 tane meal olsun.
 
 Örnek JSON FORMAT Yapı: 
 
@@ -50,7 +50,7 @@ exports.openai = catchAsync(async (req, res, next) => {
       ]
     }
 
-Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 3 tane max obje daha az da olabilir. `;
+    Her Arrayde 2 tane obje olsun. Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. `;
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
