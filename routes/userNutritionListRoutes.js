@@ -28,7 +28,7 @@ router.post(
 );
 
 router.post(
-  "/setCurrentTodayList/:id",
+  "/setCurrentTodayList",
   authController.protect,
   userNutritionListController.setCurrentTodayList
 );

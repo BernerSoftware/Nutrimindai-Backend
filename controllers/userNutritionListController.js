@@ -109,45 +109,38 @@ exports.toggleFoodCheck = catchAsync(async (req, res, next) => {
 });
 
 exports.setCurrentTodayList = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.body;
 
   const user = await currentUserByRequest(req);
   const userId = user._id;
 
   const userNutritionLists = await UserNutritionList.find({ userId });
 
-  const toggleCurrentTodayList = (list) => {
-    if (list.currentTodayList) {
-      list.currentTodayList = false;
-    } else {
-      list.currentTodayList = true;
-    }
-  };
-
-  let hasTrueValue = false;
+  let targetList;
 
   userNutritionLists.forEach((list) => {
-    if (list._id.toString() !== id && list.currentTodayList) {
-      hasTrueValue = true;
+    if (list._id.toString() === id) {
+      targetList = list;
+    } else {
+      list.currentTodayList = false; // Set all other lists' currentTodayList to false
+      list.save();
     }
   });
 
-  if (hasTrueValue) {
-    return res.status(400).json({
+  if (!targetList) {
+    return res.status(404).json({
       status: "error",
-      message:
-        "Başka bir listenin currentTodayList değeri zaten true olarak ayarlı.",
+      message: "Liste bulunamadı.",
     });
   }
 
-  const nutritionList = await UserNutritionList.findById(id);
-  toggleCurrentTodayList(nutritionList);
-
-  await nutritionList.save();
+  targetList.currentTodayList = true;
+  await targetList.save();
 
   res.status(200).json({
     status: "success",
-    data: nutritionList,
+    message: "currentTodayList değeri başarıyla güncellendi.",
+    data: targetList,
   });
 });
 
