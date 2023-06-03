@@ -27,4 +27,22 @@ router.post(
   userNutritionListController.toggleFoodCheck
 );
 
+router.post(
+  "/setCurrentTodayList/:id",
+  authController.protect,
+  userNutritionListController.setCurrentTodayList
+);
+
+router.get(
+  "/getCurrentTodayList",
+  authController.protect,
+  userNutritionListController.getCurrentTodayList
+);
+
+router.post(
+  "/recipe",
+  authController.protect,
+  userNutritionListController.recipe
+);
+
 module.exports = router;

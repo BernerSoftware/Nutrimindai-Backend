@@ -25,6 +25,10 @@ var userNutritionListSchema = new mongoose.Schema(
         ],
       },
     ],
+    currentTodayList: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,

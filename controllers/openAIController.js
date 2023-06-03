@@ -4,14 +4,14 @@ const { Configuration, OpenAIApi } = require("openai");
 const flatted = require("flatted");
 
 const config = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(config);
 
 exports.openai = catchAsync(async (req, res, next) => {
   const { age, gender, height, weight, targetWeight, allergies } = req.body;
   const prompt = `${age} yaşında ${gender}, ${height} boyunda, ${weight}  kilosunda, ${targetWeight} kilo olmak isteyen, Türkiyede yaşayan, Gluten intoleransı hastalığı olan bir birey için örnek bir diyet listesi hazırlamanı istiyorum. Diyet listesinin yapısı aynen şu şekilde olmalı: 
-İstediğin kadar öğün olabilir. Alerjiler ise şöyledir = ${allergies}. 
+İstediğin kadar öğün olabilir. Alerjiler ise şöyledir = ${allergies}. Sadece Sabah,Öğle ve Akşam yemeği olsun.
 
 Örnek JSON FORMAT Yapı: 
 
