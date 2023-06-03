@@ -165,11 +165,11 @@ exports.getCurrentTodayList = catchAsync(async (req, res, next) => {
 exports.recipe = catchAsync(async (req, res, next) => {
   const { foodName } = req.body;
 
-  const prompt = `${foodName}  yemeğinin bana nasıl yapıldığını yazabilir misin. Çok Kısa tarif ver.  Projemde kullanacağım bana standart bir JSON döndür. 
+  const prompt = `${foodName} yemeğinin bana nasıl yapıldığını yazabilir misin. Çok kısa bir tarif ver. Projemde kullanacağım için standart bir JSON döndür. 
      Örnek JSON FORMAT YAPISI:  
-     
+
      { 
-      Description: "1 adet yumurta, 8 kilo un, 5 çay kaşığı yağ" 
+      "Description": "1 adet yumurta, 8 kilo un, 5 çay kaşığı yağ" 
      } `;
 
   const response = await openai.createCompletion({
@@ -179,11 +179,19 @@ exports.recipe = catchAsync(async (req, res, next) => {
     temperature: 1,
   });
 
-  console.log(response.data.choices[0]);
+  const textResponse = response.data.choices[0].text.trim();
 
-  const responseData = JSON.parse(response.data.choices[0].text);
+  const jsonText = textResponse.replace(/^([A-Za-z]+):\s/gm, '"$1": ');
 
-  console.log(response.data.choices[0].text);
+  let responseData;
+  try {
+    responseData = JSON.parse(jsonText);
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Geçersiz JSON formatı",
+    });
+  }
 
   res.status(200).json({
     status: "success",
