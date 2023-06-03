@@ -14,17 +14,14 @@ exports.saveUserNutritionList = catchAsync(async (req, res, next) => {
 
   const { dietList } = req.body;
 
-  // Tarih kontrolü için bugünün tarihini al
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // Saat, dakika, saniye ve milisaniyeyi sıfırla
+  today.setHours(0, 0, 0, 0);
 
-  // Bugün için eklenmiş kayıtları bul
   const existingListsCount = await UserNutritionList.countDocuments({
     userId,
     createdAt: { $gte: today },
   });
 
-  // Eğer bugün için 3 kayıt varsa hata döndür
   if (existingListsCount >= 3) {
     return res.status(400).json({
       status: "error",
@@ -122,7 +119,7 @@ exports.setCurrentTodayList = catchAsync(async (req, res, next) => {
     if (list._id.toString() === id) {
       targetList = list;
     } else {
-      list.currentTodayList = false; // Set all other lists' currentTodayList to false
+      list.currentTodayList = false; 
       list.save();
     }
   });
