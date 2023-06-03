@@ -15,27 +15,42 @@ exports.openai = catchAsync(async (req, res, next) => {
 
 Örnek JSON FORMAT Yapı: 
 
-{
-        "dietList":
-        [
+  {
+          "dietList": [
+        {
+          "meal": "Breakfast",
+          "foods": [
             {
-               "meal":"Sabah Kahvaltısı",
-               "foods":[
-                {"foodName":"Yumurta","totalCalories":60, "description":"1 Adet Orta Boy"},
-                {"foodName":"Peynir","totalCalories":60,"description":"2 dilim, Tam yağlı, küçük"}
-               ]
+              "foodName": "Egg",
+              "totalCalories": 60,
+              "description": "1 Medium-sized"
             },
             {
-               "meal":"Ara Öğün",
-               "foods":[
-                {"foodName":"Ceviz","totalCalories":60,"description":"1 Avuç"},
-                {"foodName":"Elma","totalCalories":60,"description":"1 Adet Orta Boy"}
-               ]
+              "foodName": "Cheese",
+              "totalCalories": 60,
+              "description": "2 slices, Full-fat, small"
             }
-        ],
+          ]
+        },
+        {
+          "meal": "Snack",
+          "foods": [
+            {
+              "foodName": "Walnuts",
+              "totalCalories": 60,
+              "description": "1 Handful"
+            },
+            {
+              "foodName": "Apple",
+              "totalCalories": 60,
+              "description": "1 Medium-sized"
+            }
+          ]
+        }
+      ]
     }
 
-Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 3 tane max obje daha az da olabilir.`;
+Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 3 tane max obje daha az da olabilir. `;
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
