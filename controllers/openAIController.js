@@ -35,7 +35,7 @@ exports.openai = catchAsync(async (req, res, next) => {
         ],
     }
 
-Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 2 tane max obje olsun.`;
+Bu yapı dışında başka bir cevap yazma. Json formatında cevap ver. totalCalories alanı önemli. Doğru olsun lütfen. Sadece ama sadece json olarak cevap dön. Başka hiçbirşey ama hiçbirşey yazma. Sadece json. Bunu yazdım diye elbette, tabiki gibi cevaplarda verme. Her Arrayde 4 tane max obje olsun.`;
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
