@@ -12,6 +12,7 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const userRouter = require("./routes/userRoutes");
 const openAIRouter = require("./routes/openAIRoutes");
+const userNutritionListRouter = require("./routes/userNutritionListRoutes");
 
 var bodyParser = require("body-parser");
 
@@ -76,6 +77,7 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/openai", openAIRouter);
+app.use("/api/v1/nutritionList", userNutritionListRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
