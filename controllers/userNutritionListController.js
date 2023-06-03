@@ -14,10 +14,30 @@ exports.saveUserNutritionList = catchAsync(async (req, res, next) => {
 
   const { dietList } = req.body;
 
+  // Tarih kontrolü için bugünün tarihini al
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Saat, dakika, saniye ve milisaniyeyi sıfırla
+
+  // Bugün için eklenmiş kayıtları bul
+  const existingListsCount = await UserNutritionList.countDocuments({
+    userId,
+    createdAt: { $gte: today },
+  });
+
+  // Eğer bugün için 3 kayıt varsa hata döndür
+  if (existingListsCount >= 3) {
+    return res.status(400).json({
+      status: "error",
+      message:
+        "Lütfen paketinizi yükseltin. Gün içerisinde En fazla 3 tane liste ekleyebilirsiniz. İyi günler!",
+    });
+  }
+
   const userNutritionList = new UserNutritionList({
     userId: userId,
     dietList: dietList,
     listName: req.body.listName,
+    currentTodayList: true,
   });
 
   await userNutritionList.save();
