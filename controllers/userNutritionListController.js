@@ -38,7 +38,7 @@ exports.saveUserNutritionList = catchAsync(async (req, res, next) => {
     userId: userId,
     dietList: dietList,
     listName: req.body.listName,
-    currentTodayList: true,
+    currentTodayList: false,
   });
 
   await userNutritionList.save();
