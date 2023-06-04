@@ -26,8 +26,8 @@ exports.openai = catchAsync(async (req, res, next) => {
   let responseData;
   try {
     responseData = JSON.parse(responseText);
-    res.status(400).json({
-      status: "error",
+    res.status(200).json({
+      status: "success",
       data: responseData,
     });
   } catch (error) {
