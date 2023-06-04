@@ -35,7 +35,7 @@ exports.openai = catchAsync(async (req, res, next) => {
     console.error("Hatalı yanıt: ", responseText);
     res.status(400).json({
       status: "error",
-      message: "Geçerli bir JSON yanıtı alınamadı.",
+      message: "Valid JSON response could not be obtained.",
     });
     return;
   }

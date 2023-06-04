@@ -22,12 +22,16 @@ exports.saveUserNutritionList = catchAsync(async (req, res, next) => {
     createdAt: { $gte: today },
   });
 
-  if (existingListsCount >= 3) {
-    return res.status(400).json({
-      status: "error",
-      message:
-        "Lütfen paketinizi yükseltin. Gün içerisinde En fazla 3 tane liste ekleyebilirsiniz. İyi günler!",
-    });
+  if (process.env.NODE_ENV === "development") {
+    console.log("continue");
+  } else {
+    if (existingListsCount >= 3) {
+      return res.status(400).json({
+        status: "error",
+        message:
+          "Please upgrade your package. You can add a maximum of 3 lists within a day.",
+      });
+    }
   }
 
   const userNutritionList = new UserNutritionList({
@@ -119,7 +123,7 @@ exports.setCurrentTodayList = catchAsync(async (req, res, next) => {
     if (list._id.toString() === id) {
       targetList = list;
     } else {
-      list.currentTodayList = false; 
+      list.currentTodayList = false;
       list.save();
     }
   });
@@ -127,7 +131,7 @@ exports.setCurrentTodayList = catchAsync(async (req, res, next) => {
   if (!targetList) {
     return res.status(404).json({
       status: "error",
-      message: "Liste bulunamadı.",
+      message: "List not found.",
     });
   }
 
@@ -136,7 +140,7 @@ exports.setCurrentTodayList = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "currentTodayList değeri başarıyla güncellendi.",
+    message: "The value of currentTodayList has been successfully updated.",
     data: targetList,
   });
 });
@@ -153,7 +157,7 @@ exports.getCurrentTodayList = catchAsync(async (req, res, next) => {
   if (!currentTodayList) {
     return res.status(404).json({
       status: "error",
-      message: "Mevcut bir günlük liste bulunamadı.",
+      message: "No existing day list found.",
     });
   }
 
@@ -199,7 +203,7 @@ exports.recipe = catchAsync(async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "error",
-      message: "Geçersiz JSON formatı",
+      message: "Invalid JSON format.",
     });
   }
 
