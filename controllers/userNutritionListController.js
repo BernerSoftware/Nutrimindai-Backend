@@ -179,12 +179,12 @@ exports.getCurrentTodayList = catchAsync(async (req, res, next) => {
 exports.recipe = catchAsync(async (req, res, next) => {
   const { foodName } = req.body;
 
-  const prompt = `${foodName} yemeğinin bana nasıl yapıldığını yazabilir misin. Çok kısa bir tarif ver. Projemde kullanacağım için standart bir JSON döndür. 
-     Örnek JSON FORMAT YAPISI:  
+  const prompt = `${foodName} yemeğinin bana nasıl yapıldığını yazabilir misin. Çok kısa bir tarif ver. Projemde kullanacağım için standart bir JSON döndür. İngilizceye çevir.
+     Örnek JSON FORMAT YAPISI:  Description içindeki bilgiler ingilizce yazılmalı.
 
-     { 
-      "Description": "1 adet yumurta, 8 kilo un, 5 çay kaşığı yağ" 
-     } `;
+     {
+      "Description": "1 egg, 8 kilograms of flour, 5 teaspoons of oil"
+     }`;
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
